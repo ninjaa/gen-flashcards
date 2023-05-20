@@ -36,7 +36,8 @@
             // Add your OpenAI API call here to generate flashcards from the source text
             // Return the data in the format [{ Q: 'Some question?', A: 'Some answer.', index: 0 }, ...]
             // For now, let's return an empty array
-            return [];
+            // return [];
+            return [{ Q: 'Some question?', A: 'Some answer.', index: 0 }, { Q: 'Some question2?', A: 'Some answer2.', index: 1 }]
         }
 
         function displayFlashcards() {
