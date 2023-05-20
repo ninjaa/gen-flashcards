@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <h2>Flashcards App</h2>
+
+    <label for="apiKey">OpenAI API Key:</label><br>
+    <input type="text" id="apiKey" name="apiKey">
+    <button onclick="storeKey()">Store API Key</button><br>
+
+    <label for="sourceText">Source Text:</label><br>
+    <textarea id="sourceText" name="sourceText" rows="4" cols="50"></textarea><br>
+
+    <button onclick="generateFlashcards()">Generate Flashcards</button>
+
+    <ul id="flashcards"></ul>
+
+    <script>
+        let flashcards = [];
+
+        function storeKey() {
+            const apiKey = document.getElementById('apiKey').value;
+            localStorage.setItem('openai_api_key', apiKey);
+            console.log("API Key stored");
+        }
+
+        async function generateFlashcards() {
+            const sourceText = document.getElementById('sourceText').value;
+            const newFlashcards = await get_flashcard_qa(sourceText);
+            flashcards = flashcards.concat(newFlashcards);
+            displayFlashcards();
+        }
+
+        async function get_flashcard_qa(short_source_text) {
+            // Add your OpenAI API call here to generate flashcards from the source text
+            // Return the data in the format [{ Q: 'Some question?', A: 'Some answer.', index: 0 }, ...]
+            // For now, let's return an empty array
+            return [];
+        }
+
+        function displayFlashcards() {
+            const flashcardsList = document.getElementById('flashcards');
+            flashcardsList.innerHTML = '';
+
+            flashcards.forEach((flashcard, index) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Q: ${flashcard.Q} A: ${flashcard.A}`;
+                flashcardsList.appendChild(listItem);
+            });
+        }
+
+        // When the page loads, check if an API key is stored
+        window.onload = () => {
+            const apiKey = localStorage.getItem('openai_api_key');
+            if (apiKey) {
+                document.getElementById('apiKey').value = apiKey;
+            }
+        };
+    </script>
+
+</body>
+
+</html>
